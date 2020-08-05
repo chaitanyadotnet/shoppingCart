@@ -23,20 +23,24 @@ namespace Engine.Promotions
 
             var numberOfCombos = ComboSku.Select(x => items.Count(i => i.Product.SKU == x)).Min();
 
-            total = FlatPrice * numberOfCombos;
-
-            var calculatedItems = new List<Item>();
-
-            foreach (var sku in ComboSku)
+            if (numberOfCombos > 0)
             {
-                calculatedItems.AddRange(items.Where(x => x.Product.SKU == sku).Take(numberOfCombos));
+                total = FlatPrice * numberOfCombos;
+
+                var calculatedItems = new List<Item>();
+
+                foreach (var sku in ComboSku)
+                {
+                    calculatedItems.AddRange(items.Where(x => x.Product.SKU == sku).Take(numberOfCombos));
+                }
+
+                var uncalculatedItems = items.Except(calculatedItems);
+
+                total += uncalculatedItems.Any() ? uncalculatedItems.Sum(x => x.Product.Price) : default;
+
+                return new Cart(cart.Items.Except(items).ToList(), cart.Total + total);
             }
-
-            var uncalculatedItems = items.Except(calculatedItems);
-
-            total += uncalculatedItems.Any() ? uncalculatedItems.Sum(x => x.Product.Price) : default;
-
-            return new Cart(cart.Items.Except(items).ToList(), cart.Total + total);
+            return cart;
 
         }
     }
