@@ -19,7 +19,8 @@ namespace Console
             IList<IPromotion> promotions = new List<IPromotion>
             {
                 new BuyMoreSaveMore('A', 3, 130),
-                new BuyMoreSaveMore('B', 2, 45)
+                new BuyMoreSaveMore('B', 2, 45),
+                new ComboOffer(new List<char>{ 'C','D' },30)
             };
 
             //Scenario A
@@ -43,6 +44,17 @@ namespace Console
             System.Console.WriteLine("--------");
             System.Console.WriteLine(cart.Total);
             System.Console.WriteLine();
+
+            //Scenario C
+            items = new List<Item>() { new Item(A, 3), new Item(B, 5), new Item(C, 1), new Item(D, 1) };
+
+            cart = new Cart(items, calculationService.CalculateTotalCost(items, promotions));
+
+            System.Console.WriteLine("Scenario C");
+            cart.Items.ToList().ForEach(x => System.Console.WriteLine($"{x.Product.SKU}   {x.Quantity}"));
+            System.Console.WriteLine("--------");
+            System.Console.WriteLine(cart.Total);
+            System.Console.ReadLine();
         }
     }
 }
