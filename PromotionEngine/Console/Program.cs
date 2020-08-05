@@ -32,6 +32,17 @@ namespace Console
             System.Console.WriteLine("--------");
             System.Console.WriteLine(cart.Total);
             System.Console.WriteLine();
+
+            //Scenario B
+            items = new List<Item>() { new Item(A, 5), new Item(B, 5), new Item(C, 1) };
+
+            cart = new Cart(items, calculationService.CalculateTotalCost(items, promotions));
+
+            System.Console.WriteLine("Scenario B");
+            cart.Items.ToList().ForEach(x => System.Console.WriteLine($"{x.Product.SKU}   {x.Quantity}"));
+            System.Console.WriteLine("--------");
+            System.Console.WriteLine(cart.Total);
+            System.Console.WriteLine();
         }
     }
 }
