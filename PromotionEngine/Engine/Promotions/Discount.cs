@@ -5,7 +5,10 @@ namespace Engine.Promotions
 {
     public class Discount : IPromotion
     {
-        
+        public Product Product { get; private set; }
+        public decimal DiscountPersentage { get; private set; }
+
+
         public Cart Calculate(Cart cart)
         {
             //this is a future class to use for % discounts 
