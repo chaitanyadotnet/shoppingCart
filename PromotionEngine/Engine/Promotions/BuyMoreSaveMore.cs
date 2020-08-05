@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Engine.Promotions
@@ -19,7 +20,23 @@ namespace Engine.Promotions
 
         public Cart Calculate(Cart cart)
         {
-            throw new NotImplementedException();
+            decimal total = default;
+            var items = cart.Items.Where(x => x.Product.SKU == PromotedProductSku).ToList();
+
+            var quantityPending = items.Sum(x => x.Quantity);
+
+            if (items != null && quantityPending > PromotionQuantity)
+            {
+                var numberOfSets = (int)Math.Floor((decimal)quantityPending / PromotionQuantity);
+                total = numberOfSets * PromotionAmount;
+                quantityPending = quantityPending - (numberOfSets * PromotionQuantity);
+
+                total += quantityPending * items.FirstOrDefault().Product.Price;
+
+                return new Cart(cart.Items.Except(items).ToList(), cart.Total + total);
+            }
+
+            return cart;
         }
     }
 }
