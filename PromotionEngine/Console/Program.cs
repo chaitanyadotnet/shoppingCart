@@ -25,27 +25,19 @@ namespace Console
 
             //Scenario A
             var items = new List<Item>() { new Item(A, 1), new Item(B, 1), new Item(C, 1) };
-
             var cart = new Cart(items, calculationService.CalculateTotalCost(items, promotions));
-
             DisplayCart(cart, "Scenario A");
 
             //Scenario B
             items = new List<Item>() { new Item(A, 5), new Item(B, 5), new Item(C, 1) };
-
             cart = new Cart(items, calculationService.CalculateTotalCost(items, promotions));
-
             DisplayCart(cart, "Scenario B");
 
             //Scenario C
             items = new List<Item>() { new Item(A, 3), new Item(B, 5), new Item(C, 1), new Item(D, 1) };
-
             cart = new Cart(items, calculationService.CalculateTotalCost(items, promotions));
+            DisplayCart(cart, "Scenario C");
 
-            System.Console.WriteLine("Scenario C");
-            cart.Items.ToList().ForEach(x => System.Console.WriteLine($"{x.Product.SKU}   {x.Quantity}"));
-            System.Console.WriteLine("--------");
-            System.Console.WriteLine(cart.Total);
             System.Console.ReadLine();
         }
 
