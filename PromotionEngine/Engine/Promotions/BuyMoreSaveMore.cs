@@ -24,15 +24,18 @@ namespace Engine.Promotions
             decimal total = default;
             var items = cart.Items.Where(x => x.Product.SKU == PromotedProductSku).ToList();
 
-            var quantityPending = items.Sum(x => x.Quantity);
+            var totalQuantityToProcess = items.Sum(x => x.Quantity);
 
-            if (items != null && quantityPending >= PromotionQuantity)
+            if (items != null && totalQuantityToProcess >= PromotionQuantity)
             {
-                var numberOfSets = (int)Math.Floor((decimal)quantityPending / PromotionQuantity);
+                var numberOfSets = (int)Math.Floor((decimal)totalQuantityToProcess / PromotionQuantity);
                 total = numberOfSets * PromotionAmount;
-                quantityPending = quantityPending - (numberOfSets * PromotionQuantity);
 
-                total += quantityPending * items.FirstOrDefault().Product.Price;
+                int processedProductCount = (numberOfSets * PromotionQuantity);
+
+                var unprocessedQuantity = totalQuantityToProcess - processedProductCount;
+
+                total += unprocessedQuantity * items.FirstOrDefault().Product.Price;
 
                 return new Cart(cart.Items.Except(items).ToList(), cart.Total + total);
             }
