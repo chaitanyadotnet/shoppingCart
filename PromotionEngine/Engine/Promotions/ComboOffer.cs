@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,6 +12,9 @@ namespace Engine.Promotions
 
         public ComboOffer(IEnumerable<char> comboSku, decimal flatAmount)
         {
+            if (comboSku == null || !comboSku.Any() || flatAmount == default)
+                throw new ArgumentNullException();
+
             ComboSku = comboSku;
             FlatPrice = flatAmount;
         }
