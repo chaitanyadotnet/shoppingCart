@@ -11,6 +11,9 @@ namespace Engine.Promotions
 
         public BuyMoreSaveMore(char sku, int quantity, decimal promotionAmount)
         {
+            if (sku == default || quantity == default || promotionAmount == default)
+                throw new ArgumentNullException();
+
             PromotedProductSku = sku;
             PromotionQuantity = quantity;
             PromotionAmount = promotionAmount;
