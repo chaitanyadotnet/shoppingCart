@@ -28,11 +28,7 @@ namespace Console
 
             var cart = new Cart(items, calculationService.CalculateTotalCost(items, promotions));
 
-            System.Console.WriteLine("Scenario A");
-            cart.Items.ToList().ForEach(x => System.Console.WriteLine($"{x.Product.SKU}   {x.Quantity}"));
-            System.Console.WriteLine("--------");
-            System.Console.WriteLine(cart.Total);
-            System.Console.WriteLine();
+            DisplayCart(cart, "Scenario A");
 
             //Scenario B
             items = new List<Item>() { new Item(A, 5), new Item(B, 5), new Item(C, 1) };
@@ -55,6 +51,15 @@ namespace Console
             System.Console.WriteLine("--------");
             System.Console.WriteLine(cart.Total);
             System.Console.ReadLine();
+        }
+
+        private static void DisplayCart(Cart cart, string cartName)
+        {
+            System.Console.WriteLine(cartName);
+            cart.Items.ToList().ForEach(x => System.Console.WriteLine($"{x.Product.SKU}   {x.Quantity}"));
+            System.Console.WriteLine("--------");
+            System.Console.WriteLine(cart.Total);
+            System.Console.WriteLine();
         }
     }
 }
