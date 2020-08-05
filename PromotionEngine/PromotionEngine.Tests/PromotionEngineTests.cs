@@ -1,7 +1,6 @@
 using Domain.Models;
 using Engine;
 using Engine.Promotions;
-using System;
 using System.Collections.Generic;
 using Xunit;
 
