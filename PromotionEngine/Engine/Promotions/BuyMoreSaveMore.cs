@@ -23,7 +23,7 @@ namespace Engine.Promotions
 
             var quantityPending = items.Sum(x => x.Quantity);
 
-            if (items != null && quantityPending > PromotionQuantity)
+            if (items != null && quantityPending >= PromotionQuantity)
             {
                 var numberOfSets = (int)Math.Floor((decimal)quantityPending / PromotionQuantity);
                 total = numberOfSets * PromotionAmount;
