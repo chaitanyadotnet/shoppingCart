@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Domain.Models;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Engine.Promotions
 {
@@ -17,7 +17,27 @@ namespace Engine.Promotions
 
         public Cart Calculate(Cart cart)
         {
-            throw new NotImplementedException();
+            decimal total = default;
+
+            var items = cart.Items.Where(x => ComboSku.Any(c => c == x.Product.SKU)).ToList();
+
+            var numberOfCombos = ComboSku.Select(x => items.Count(i => i.Product.SKU == x)).Min();
+
+            total = FlatPrice * numberOfCombos;
+
+            var calculatedItems = new List<Item>();
+
+            foreach (var sku in ComboSku)
+            {
+                calculatedItems.AddRange(items.Where(x => x.Product.SKU == sku).Take(numberOfCombos));
+            }
+
+            var uncalculatedItems = items.Except(calculatedItems);
+
+            total += uncalculatedItems.Any() ? uncalculatedItems.Sum(x => x.Product.Price) : default;
+
+            return new Cart(cart.Items.Except(items).ToList(), cart.Total + total);
+
         }
     }
 }
