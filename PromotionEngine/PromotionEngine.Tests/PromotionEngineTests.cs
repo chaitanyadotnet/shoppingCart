@@ -54,5 +54,17 @@ namespace PromotionEngine.Tests
             //Assert
             Assert.Equal(370, cart.Total);
         }
+        [Fact(DisplayName = "Scenario C tests")]
+        public void ScenarioCTest()
+        {
+            //Arrange
+            var items = new List<Item>() { new Item(_a, 3), new Item(_b, 5), new Item(_c, 1), new Item(_d, 1) };
+
+            //Act
+            var cart = new Cart(items, _calculationService.CalculateTotalCost(items, _promotions));
+
+            //Assert
+            Assert.Equal(280, cart.Total);
+        }
     }
 }
